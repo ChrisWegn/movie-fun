@@ -20,6 +20,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import javax.transaction.*;
 
 @SpringBootApplication(exclude = {
         DataSourceAutoConfiguration.class,
@@ -95,12 +96,12 @@ public class Application {
         return factoryBean;
     }
 
-    @Bean
+    @Bean("albumsTransactionManager")
     public PlatformTransactionManager albumsTransactionManager(EntityManagerFactory albumsFactory) {
         return new JpaTransactionManager(albumsFactory);
     }
 
-    @Bean
+    @Bean("moviesTransactionManager")
     public PlatformTransactionManager moviesTransactionManager(EntityManagerFactory moviesFactory) {
         return new JpaTransactionManager(moviesFactory);
     }

@@ -17,6 +17,7 @@
 package org.superbiz.moviefun.movies;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -36,21 +37,22 @@ public class MoviesBean {
         return entityManager.find(Movie.class, id);
     }
 
+    @Transactional(transactionManager = "moviesTransactionManager")
     public void addMovie(Movie movie) {
         entityManager.persist(movie);
     }
 
-    @Transactional
+    @Transactional(transactionManager = "moviesTransactionManager")
     public void editMovie(Movie movie) {
         entityManager.merge(movie);
     }
 
-    @Transactional
+    @Transactional(transactionManager = "moviesTransactionManager")
     public void deleteMovie(Movie movie) {
         entityManager.remove(movie);
     }
 
-    @Transactional
+    @Transactional(transactionManager = "moviesTransactionManager")
     public void deleteMovieId(long id) {
         Movie movie = entityManager.find(Movie.class, id);
         deleteMovie(movie);
